@@ -104,3 +104,42 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     await user.save({ validateBeforeSave: false })
     sendToken(user,200,res)
 })
+
+
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.user;
+    let user = await User.findById(id)
+    res.status(200).json({ success: true, message: "User fetched successfully", data: user })
+})
+
+// update password
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.user;
+    let user = await User.findById(id).select("+password")
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Old password is incorrect", 400))
+    }
+
+    if(req.body.newPassword !== req.body.confirmPassword){
+        return next(new ErrorHandler("Password does not match", 400))
+    }
+
+    user.password = req.body.newPassword
+    await user.save()
+
+    sendToken(user,200,res)
+})
+
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email
+    }
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, { returnDocument: 'after', runValidators: true, useFindAndModify: false })
+
+    res.status(200).json({ success: true, message: "User profile updated successfully", data: user })
+})
+
