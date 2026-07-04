@@ -10,9 +10,10 @@ app.set('query parser', 'extended');
 
 
 const products = require("./routes/productsRoute")
-
+const users = require("./routes/usersRoute")
 
 app.use("/api/v1", products);
+app.use("/api/v1/user", users);
 
 // Middleware for Errors
 
