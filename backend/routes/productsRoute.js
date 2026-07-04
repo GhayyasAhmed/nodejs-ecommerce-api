@@ -6,8 +6,8 @@ const router = Router()
 
 router.get("/products", getAllProducts)
 router.get("/product/:id", getProductDetails)
-router.post("/product/new", isAuthenticatedUser, authorizeRoles("admin"), createProduct)
-router.patch("/product/:id", isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
-router.delete("/product/:id", isAuthenticatedUser, authorizeRoles("admin"), deleteProduct)
+router.post("/admin/product/new", isAuthenticatedUser, authorizeRoles("admin"), createProduct)
+router.patch("/admin/product/:id", isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
+router.delete("/admin/product/:id", isAuthenticatedUser, authorizeRoles("admin"), deleteProduct)
 
 module.exports = router
