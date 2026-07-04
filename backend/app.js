@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express()
+const cookieParser = require("cookie-parser")
 
 const errorMiddleware = require("./middlewares/error")
 
 app.use(express.json())
+app.use(cookieParser())
 
 // Revert to Express 4 behavior for nested queries
 app.set('query parser', 'extended'); 
