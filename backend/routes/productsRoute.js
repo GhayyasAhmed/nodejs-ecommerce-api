@@ -5,14 +5,14 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth")
 
 const router = Router()
 
-router.get("/products", getAllProducts)
-router.get("/product/:id", getProductDetails)
-router.post("/admin/product/new", isAuthenticatedUser, authorizeRoles("admin"), createProduct)
-router.patch("/admin/product/:id", isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
-router.delete("/admin/product/:id", isAuthenticatedUser, authorizeRoles("admin"), deleteProduct)
-router.put("/products/review",isAuthenticatedUser, createProductReview)
-router.get("/products/review", getProductReviews)
-router.delete("/products/review",isAuthenticatedUser, deleteProductReviews)
+router.get("/", getAllProducts)
+router.get("/:id", getProductDetails)
+router.post("/admin/new", isAuthenticatedUser, authorizeRoles("admin"), createProduct)
+router.patch("/admin/:id", isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
+router.delete("/admin/:id", isAuthenticatedUser, authorizeRoles("admin"), deleteProduct)
+router.put("/review",isAuthenticatedUser, createProductReview)
+router.get("/review", getProductReviews)
+router.delete("/review",isAuthenticatedUser, deleteProductReviews)
 
 
 module.exports = router
